@@ -51,9 +51,8 @@ public class StatsServiceImpl implements StatsService {
         if (unique) {
             log.info("Hits from unique IP's receiving complete successfully");
             return hitRepository.findUniqHits(start, end, uris);
-        } else {
-            log.info("Hits receiving complete successfully");
-            return hitRepository.findNonUniqHits(start, end, uris);
         }
+        log.info("Hits receiving complete successfully");
+        return hitRepository.findNonUniqHits(start, end, uris);
     }
 }

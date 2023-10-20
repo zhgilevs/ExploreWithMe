@@ -18,23 +18,23 @@ public class StatsClient extends BaseClient {
 
     @Autowired
     public StatsClient(@Value("${stats-server.url}") String serverUrl, RestTemplateBuilder builder) {
-        super(
-                builder
-                        .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
-                        .requestFactory(HttpComponentsClientHttpRequestFactory::new)
-                        .build()
+        super(builder
+                .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
+                .requestFactory(HttpComponentsClientHttpRequestFactory::new)
+                .build()
         );
     }
 
-    ResponseEntity<Object> create(HttpServletRequest request) {
+    public ResponseEntity<Object> hit(HttpServletRequest request, String app) {
+        String realIp = request.getRemoteAddr().equals("0:0:0:0:0:0:0:1") ? "127.0.0.1" : request.getRemoteAddr();
         return post("/hit", new StatsRequestDto(
-                request.getContextPath(),
+                app,
                 request.getRequestURI(),
-                request.getRemoteAddr(),
+                realIp,
                 LocalDateTime.now()));
     }
 
-    ResponseEntity<Object> get(String start, String end, Collection<String> uris, Boolean unique) {
+    public ResponseEntity<Object> get(String start, String end, Collection<String> uris, Boolean unique) {
         Map<String, Object> parameters = Map.of(
                 "start", start,
                 "end", end,
