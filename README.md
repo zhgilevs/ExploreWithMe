@@ -42,7 +42,7 @@
 - [спецификация основного сервиса](https://raw.githubusercontent.com/yandex-praktikum/java-explore-with-me/main/ewm-main-service-spec.json)
 - [спецификация сервиса статистики](https://raw.githubusercontent.com/yandex-praktikum/java-explore-with-me/main/ewm-stats-service-spec.json)
 
-### Дополнительная функциональность
+### Дополнительная функциональность ([Pull request](https://github.com/zhgilevs/java-explore-with-me/pull/5))
 
 - В новой версии добавлена возможность оставлять комментарии к мероприятиям, а также отвечать на комментарии других пользователей;
 - Пользователь может создать, отредактировать текст своего комментария, удалить, просмотреть конкретный или все свои комментарии;
