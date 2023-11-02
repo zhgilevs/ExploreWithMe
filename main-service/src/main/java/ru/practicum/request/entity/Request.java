@@ -1,6 +1,7 @@
 package ru.practicum.request.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.practicum.event.entity.Event;
@@ -24,6 +25,7 @@ public class Request {
     private long id;
 
     @Column(name = "request_created", nullable = false)
+    @CreationTimestamp
     private LocalDateTime created;
 
     @ManyToOne(fetch = FetchType.LAZY)

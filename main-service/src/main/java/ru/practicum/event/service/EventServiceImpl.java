@@ -166,9 +166,7 @@ public class EventServiceImpl implements EventService {
             }
         }
         if (updateEventRequestDto.getEventDate() != null) {
-            LocalDateTime eventDayFromRequest = LocalDateTime.parse(
-                    updateEventRequestDto.getEventDate(),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            LocalDateTime eventDayFromRequest = LocalDateTime.parse(updateEventRequestDto.getEventDate(), FORMATTER);
             if (eventDayFromRequest.isBefore(now.plusHours(1))) {
                 throw new ValidationException("Event date is incorrect. Should be not earlier than 1 hour from publication");
             }
@@ -316,7 +314,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private LocalDateTime checkEventDate(String eventDate) {
-        LocalDateTime result = LocalDateTime.parse(eventDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime result = LocalDateTime.parse(eventDate, FORMATTER);
         if (result.isBefore(LocalDateTime.now().plusHours(2))) {
             throw new ValidationException("Event date is incorrect. Should be not earlier than 2 hours");
         }
@@ -454,16 +452,14 @@ public class EventServiceImpl implements EventService {
     }
 
     private List<EventShortResponseDto> updateViewsAndConfirmedRequestsInEventShortResponseDto(List<Event> events) {
-        List<EventShortResponseDto> result = new ArrayList<>();
         Map<Long, Long> views = statService.getStats(events);
         Map<Long, Long> requests = requestService.getConfirmedRequests(events);
-        EventShortResponseDto responseDto;
-        for (Event event : events) {
-            responseDto = toEventShortResponseDto(event);
-            responseDto.setViews(views.getOrDefault(event.getId(), 0L));
-            responseDto.setConfirmedRequests(requests.getOrDefault(event.getId(), 0L));
-            result.add(responseDto);
-        }
-        return result;
+        return events.stream()
+                .map(EventMapper::toEventShortResponseDto)
+                .peek(r -> {
+                    r.setViews(views.getOrDefault(r.getId(), 0L));
+                    r.setConfirmedRequests(requests.getOrDefault(r.getId(), 0L));
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package ru.practicum.event.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.practicum.category.entity.Category;
@@ -49,6 +50,7 @@ public class Event {
     private LocalDateTime eventDate;
 
     @Column(name = "event_created_on")
+    @CreationTimestamp
     private LocalDateTime createdOn;
 
     @Column(name = "event_published_on")

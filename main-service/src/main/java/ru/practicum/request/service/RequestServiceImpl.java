@@ -18,7 +18,6 @@ import ru.practicum.request.repository.RequestRepository;
 import ru.practicum.user.entity.User;
 import ru.practicum.user.repository.UserRepository;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +58,6 @@ public class RequestServiceImpl implements RequestService {
             throw new PermissionException("Participant limit of event already reached");
         }
         Request request = Request.builder()
-                .created(LocalDateTime.now())
                 .event(event)
                 .requester(requester)
                 .status(requestStatus)

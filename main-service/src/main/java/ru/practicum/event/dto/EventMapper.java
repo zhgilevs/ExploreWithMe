@@ -30,7 +30,6 @@ public class EventMapper {
                 .location(location)
                 .eventDate(eventDay)
                 .build();
-        event.setCreatedOn(LocalDateTime.now());
         event.setRequestModeration((newEventRequestDto.getRequestModeration() != null) ? newEventRequestDto.getRequestModeration() : true);
         if (!event.isRequestModeration()) {
             event.setPublishedOn(event.getCreatedOn());
