@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.category.dto.CategoryDto;
+import ru.practicum.comment.dto.CommentResponseDto;
 import ru.practicum.event.entity.EventState;
 import ru.practicum.user.dto.UserShortDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -34,4 +36,5 @@ public class EventResponseDto {
     private EventState state;
     private long confirmedRequests;
     private long views;
+    private List<CommentResponseDto> comments;
 }
